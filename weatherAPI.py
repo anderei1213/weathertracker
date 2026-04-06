@@ -101,11 +101,9 @@ def get_heat_safety_category(heat_index_celsius):
 def get_precipitation_volume(current_weather_data):
     """Extracts rain or snow volume in mm."""
     rain_volume = current_weather_data.get('rain', {}).get('1h', 0) or current_weather_data.get('rain', {}).get('3h', 0)
-    snow_volume = current_weather_data.get('snow', {}).get('1h', 0) or current_weather_data.get('snow', {}).get('3h', 0)
-    return rain_volume, snow_volume
+    return rain_volume
 
 def get_flood_risk_level(rainfall_mm):
-    """Determines flood risk based on rainfall intensity."""
     if rainfall_mm > 15:
         return "Red Rainfall Warning", "Torrential rain. Flash flooding highly likely."
     elif rainfall_mm > 7.5:
