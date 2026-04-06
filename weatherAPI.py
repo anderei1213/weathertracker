@@ -7,7 +7,6 @@ import plotly.express as px
 OPENWEATHER_API_KEY = "39a81eaad8f4d90734462eed7dfc5413"
 
 def set_dynamic_background(weather_condition, is_daytime):
-    """Injects custom CSS to change the background based on weather and time."""
     if is_daytime:
         if "Clear" in weather_condition:
             background_style = "linear-gradient(to bottom, #4facfe, #00f2fe)"
@@ -37,7 +36,6 @@ def set_dynamic_background(weather_condition, is_daytime):
     )
 
 def fetch_data_from_api(url, max_retries=3):
-    """Helper function to handle API requests with retries."""
     for attempt in range(max_retries):
         try:
             response = requests.get(url, timeout=10)
@@ -49,26 +47,24 @@ def fetch_data_from_api(url, max_retries=3):
     return None
 
 def get_complete_weather_report(location_query):
-    """Fetches coordinates, current weather, air quality, and forecast."""
     # Coor
     geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={location_query}&limit=1&appid={OPENWEATHER_API_KEY}"
     geo_results = fetch_data_from_api(geo_url)
     if not geo_results: return None
-
     latitude = geo_results[0]["lat"]
     longitude = geo_results[0]["lon"]
     city_name = geo_results[0]["name"]
     country_code = geo_results[0].get("country", "PH")
 
-    # 2. Get Current Weather
+    #Get Current Weather
     current_url = f"https://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={OPENWEATHER_API_KEY}&units=metric"
     current_weather = fetch_data_from_api(current_url)
 
-    # 3. Get Air Quality
+    #Get Air Quality
     air_quality_url = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={latitude}&lon={longitude}&appid={OPENWEATHER_API_KEY}"
     air_quality = fetch_data_from_api(air_quality_url)
 
-    # 4. Get 5-Day Forecast
+    #Get 5-Day Forecast
     forecast_url = f"https://api.openweathermap.org/data/2.5/forecast?lat={latitude}&lon={longitude}&appid={OPENWEATHER_API_KEY}&units=metric"
     forecast_data = fetch_data_from_api(forecast_url)
 
@@ -78,7 +74,6 @@ def get_complete_weather_report(location_query):
     }
 
 def calculate_heat_index(celsius_temp, humidity_percentage):
-    """Calculates the perceived temperature (Heat Index)."""
     fahrenheit_temp = (celsius_temp * 9/5) + 32
     if fahrenheit_temp < 80:
         heat_index_f = fahrenheit_temp - (0.55 - 0.0055 * humidity_percentage) * (fahrenheit_temp - 58)
