@@ -155,7 +155,7 @@ if user_location_input or is_search_clicked:
         flood_title, flood_description = get_flood_risk_level(rain_amount)
         
         #Display Location Header
-        st.header(f"📍 {all_weather_data['city']}, {all_weather_data['country']}")
+        st.header(f"{all_weather_data['city']}, {all_weather_data['country']}")
         
         #Dashboard Metrics
         metric_col1, metric_col2, metric_col3, metric_col4, metric_col5 = st.columns(5)
