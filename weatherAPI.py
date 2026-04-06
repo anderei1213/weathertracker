@@ -155,7 +155,7 @@ if user_location_input or is_search_clicked:
         metric_col1.metric("Temperature", f"{current_temp}°C")
         metric_col2.metric("Humidity", f"{current_humidity}%")
         metric_col3.metric("Heat Index", f"{round(calculated_hi, 1)}°C")
-        metric_col4.metric("Precipitation", f"{max(rain_amount)} mm")
+        metric_col4.metric("Precipitation", f"{max(rain_amount.values())} mm")
         metric_col5.metric("Wind Speed", f"{round(current_data['wind']['speed']*3.6, 1)} km/h")
 
         #Safety Alerts
